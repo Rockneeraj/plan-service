@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: plans-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: plans-service
+  template:
+    metadata:
+      labels:
+        app: plans-service
+    spec:
+      containers:
+        - name: plans-service
+          image: plans-service:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 5001
+          volumeMounts:
+            - name: sqlite-storage
+              mountPath: /app/db
+      volumes:
+        - name: sqlite-storage
+          emptyDir: {}
+
